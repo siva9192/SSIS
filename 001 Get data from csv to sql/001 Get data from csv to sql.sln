@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "001 Get data from csv to sql", "001 Get data from csv to sql.dtproj", "{7BBCF955-91EE-4A14-B86A-09EE5C224F3D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7BBCF955-91EE-4A14-B86A-09EE5C224F3D}.Development|Default.ActiveCfg = Development
+		{7BBCF955-91EE-4A14-B86A-09EE5C224F3D}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {80CBA2B8-710A-484B-8036-7E5CC4A7E730}
+	EndGlobalSection
+EndGlobal
