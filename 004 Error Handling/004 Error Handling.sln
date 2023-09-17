@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "004 Error Handling", "004 Error Handling.dtproj", "{D9293AA0-3687-443A-B019-AA5633EAD1DA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D9293AA0-3687-443A-B019-AA5633EAD1DA}.Development|Default.ActiveCfg = Development
+		{D9293AA0-3687-443A-B019-AA5633EAD1DA}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4C14E1BC-AE69-4E73-871A-2EC8E5641008}
+	EndGlobalSection
+EndGlobal
