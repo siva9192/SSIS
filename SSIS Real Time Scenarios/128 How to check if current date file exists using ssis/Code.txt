@@ -1,0 +1,22 @@
+public void Main()
+		{
+            // TODO: Add your code here User::FolderPath, IsFileExists
+
+            string FileName = "Customer_" + DateTime.Now.ToString("yyyyMMdd") + ".csv";
+            string FullFilePath = Dts.Variables["FolderPath"].Value.ToString() + "\\" + FileName;
+            bool IsFileExists;
+
+            if (File.Exists(FullFilePath))
+            {
+                IsFileExists = true;
+            }
+            else
+            {
+                IsFileExists = false;
+            }
+
+            Dts.Variables["IsFileExists"].Value = IsFileExists;
+
+
+            Dts.TaskResult = (int)ScriptResults.Success;
+		}

@@ -1,0 +1,1 @@
+LEN(DateOfJoining) == 8 ? SUBSTRING(DateOfJoining,1,4) + "-" + SUBSTRING(DateOfJoining,5,2) + "-" + SUBSTRING(DateOfJoining,7,2) : NULL(DT_WSTR,20)

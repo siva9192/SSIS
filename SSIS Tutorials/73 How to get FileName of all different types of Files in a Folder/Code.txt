@@ -1,3 +1,0 @@
-"insert into FileDetails
-select '"+ @[User::FileName] +"'
-"

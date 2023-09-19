@@ -1,0 +1,9 @@
+Derived Column: 
+
+FileName: (DT_STR,100,1252)@[User::FileName]
+
+-----------
+SSIS variables
+
+SQLQuery: "SELECT * FROM OPENROWSET(BULK N'"+ @[User::FilePath] +"', SINGLE_BLOB) AS img; "
+FileName: RIGHT( @[User::FilePath] , FINDSTRING(REVERSE( @[User::FilePath] ) , "\\", 1) - 1)

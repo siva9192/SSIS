@@ -1,0 +1,54 @@
+using System.IO;
+using Renci.SshNet;
+
+public void Main()
+		{
+            string currentdatetime = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string LogFolder = @"D:\Files\Logs";
+
+            try
+            {
+                DownloadFiles();
+            }
+
+            catch (Exception exception)
+            {
+                using (StreamWriter sw = File.CreateText(LogFolder + "\\" + "ErrorLog_" + currentdatetime + ".log"))
+                {
+                    sw.WriteLine(exception.ToString());
+                }
+
+            }
+
+            Dts.TaskResult = (int)ScriptResults.Success;
+		}
+
+
+ public static void DownloadFiles()
+        {
+            string host = "192.168.1.100";
+            string username = "hp";
+            string password = "hi";
+            string remoteFolder = @"/C:/Data to Load/";
+            string localFolder = @"D:\Files\";
+
+            using (var sftp = new SftpClient(host, username, password))
+            {
+                sftp.Connect();
+                var files = sftp.ListDirectory(remoteFolder);
+                foreach (var file in files)
+                {
+                    if(file.Name.StartsWith("Product"))
+                    { 
+                        if (file.Name != "." && file.Name != "..")
+                    {
+                        using (var localFile = File.OpenWrite(localFolder + file.Name))
+                        {
+                            sftp.DownloadFile(file.FullName, localFile);
+                        }
+                    }
+                    }
+                }
+                sftp.Disconnect();
+            }
+        } // method end

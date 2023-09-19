@@ -1,0 +1,70 @@
+// Make sure you have that Microsoft CSharp reference added. If not then add it from references.
+
+using System.IO;
+using Microsoft.Office.Interop.Excel;
+using System.Data.OleDb;
+using System.Data.SqlClient;
+
+	    string currentdatetime = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string LogFolder = @"D:\Files\Logs";
+            string filePath = @"D:\Files\Email.xlsx";
+            string sqlConnectionString = @"Data Source=DESKTOP-EKJ1P64\SQL2019;Initial Catalog=Test;Integrated Security=True";
+
+            try
+            {
+                // Open the Excel file and retrieve the data
+                Application excel = new Application();
+                Workbook wb = excel.Workbooks.Open(filePath);
+
+                // Loop through all the sheets in the workbook
+                for (int i = 1; i <= wb.Sheets.Count; i++)
+                {
+                    // Retrieve the data from the sheet
+                    Worksheet sheet = wb.Sheets[i];
+                    Range range = sheet.UsedRange;
+
+                    // Create a connection to the Excel file
+                    string connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filePath + ";Extended Properties='Excel 12.0;HDR=YES;IMEX=1;'";
+                    using (OleDbConnection connection = new OleDbConnection(connectionString))
+                    {
+                        connection.Open();
+
+                        // Retrieve the data using a DataSet or DataTable
+                        System.Data.DataTable data = new System.Data.DataTable();
+                        OleDbDataAdapter adapter = new OleDbDataAdapter("SELECT * FROM [" + sheet.Name + "$]", connection);
+                        adapter.Fill(data);
+
+                        // Close the connection to the Excel file
+                        connection.Close();
+
+                        // Create a connection to the SQL Server database
+                        using (SqlConnection sqlConnection = new SqlConnection(sqlConnectionString))
+                        {
+                            sqlConnection.Open();
+
+                            // Insert the data into the desired table
+                            using (SqlBulkCopy bulkCopy = new SqlBulkCopy(sqlConnection))
+                            {
+                                bulkCopy.DestinationTableName = "dbo.Email";
+                                bulkCopy.WriteToServer(data);
+                            }
+
+                            // Close the connection to the SQL Server database
+                            sqlConnection.Close();
+                        }
+                    }
+                }
+
+                // Close the Excel file
+                wb.Close();
+                excel.Quit();
+            }
+
+            catch (Exception exception)
+            {
+                using (StreamWriter sw = File.CreateText(LogFolder + "\\" + "ErrorLog_" + currentdatetime + ".log"))
+                {
+                    sw.WriteLine(exception.ToString());
+                }
+
+            }

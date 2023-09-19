@@ -1,0 +1,64 @@
+using System.IO;
+
+public void Main()
+		{
+            string currentdatetime = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string LogFolder = @"D:\Files\Logs";
+
+            try
+            {
+                // Set the path to the file you want to check
+                string filePath = Dts.Variables["FilePath"].Value.ToString();
+
+                // Get the initial file size
+                long initialSize = new FileInfo(filePath).Length;
+
+                // Set the maximum wait time (in seconds)
+                int maxWaitTime = 3600 / 15; // 60 minutes
+
+                // Set a counter for the wait time
+                int waitTime = 0;
+
+                // Wait for the file size to remain constant
+                while (true)
+                {
+
+                    // Wait for 15 second
+                    System.Threading.Thread.Sleep(15 * 1000);
+                    waitTime += 1;
+
+                    // Get the current file size
+                    long currentSize = new FileInfo(filePath).Length;
+
+                    // Check if the file size has changed
+                    if (currentSize == initialSize)
+                    {
+                        // The file size has remained constant, so the file is complete
+                        Dts.Variables["Status"].Value = "File is complete";
+                        break;
+                    }
+
+                    // The file size has changed, so update the initial size and wait
+                    initialSize = currentSize;
+
+                    // check if wait time is crossing maximum wait time 
+                    if (waitTime > maxWaitTime)
+                    {
+                        //if wait time is crossing then you can decide to fail the package or exit the loop
+                        Dts.Variables["Status"].Value = "File is incomplete";
+                        break;
+                    }
+                }
+            }
+
+            catch (Exception exception)
+            {
+                using (StreamWriter sw = File.CreateText(LogFolder + "\\" + "ErrorLog_" + currentdatetime + ".log"))
+                {
+                    sw.WriteLine(exception.ToString());
+                }
+
+            }
+
+            Dts.TaskResult = (int)ScriptResults.Success;
+		}

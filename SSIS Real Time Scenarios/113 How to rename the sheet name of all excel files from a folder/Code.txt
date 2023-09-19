@@ -1,0 +1,37 @@
+using System.IO;
+using Microsoft.Office.Interop.Excel;
+using Microsoft.CSharp;
+
+			string currentdatetime = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string LogFolder = @"D:\Files\Logs";
+            string folderPath = @"D:\Files";
+
+            try
+            {
+                string[] filePaths = Directory.GetFiles(folderPath, "*.xlsx");
+
+                foreach (string filePath in filePaths)
+                {
+                    // Open the Excel file
+                    Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
+                    Workbook workbook = excelApp.Workbooks.Open(filePath);
+
+                    // Rename the sheet name
+                    Worksheet sheet = workbook.Sheets[1];
+                    sheet.Name = "SheetName1";
+
+                    // Save and close the Excel file
+                    workbook.Save();
+                    workbook.Close();
+
+                }
+            }
+
+            catch (Exception exception)
+            {
+                using (StreamWriter sw = File.CreateText(LogFolder + "\\" + "ErrorLog_" + currentdatetime + ".log"))
+                {
+                    sw.WriteLine(exception.ToString());
+                }
+
+            }

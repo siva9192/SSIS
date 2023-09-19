@@ -1,3 +1,0 @@
-"insert into event_ssis
-select 'Package.dtsx','"+ @[System::SourceName] +"','OnPreExecute event',getdate()
-"

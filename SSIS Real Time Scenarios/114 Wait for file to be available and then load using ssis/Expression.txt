@@ -1,0 +1,17 @@
+@[User::Status] == "File is incomplete"
+
+@[User::Status] == "File is complete"
+
+
+//file is incomplete
+
+"insert into audit_log
+select 'Package1.dtsx', 'File is incomplete', '"+ @[User::FilePath] +"', 0, GETDATE()
+"
+
+
+//file is complete
+
+"insert into audit_log
+select 'Package1.dtsx', 'File is complete', '"+ @[User::FilePath] +"', "+(DT_WSTR,12) @[User::RecordsInserted] +", GETDATE()
+"

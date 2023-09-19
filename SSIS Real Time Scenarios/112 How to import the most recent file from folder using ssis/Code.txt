@@ -1,0 +1,16 @@
+ string SourceFolder = Dts.Variables["SourceFolder"].Value.ToString();
+            var files = new DirectoryInfo(SourceFolder).GetFiles("*.CSV");
+            string NewFile = "";
+
+            DateTime lastModified = DateTime.MinValue;
+
+            foreach (FileInfo file in files)
+            {
+                if (file.LastWriteTime > lastModified)
+                {
+                    lastModified = file.LastWriteTime;
+                    NewFile = file.FullName;
+                }
+            }
+
+            Dts.Variables["FilePath"].Value = NewFile;

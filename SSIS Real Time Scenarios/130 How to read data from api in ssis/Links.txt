@@ -1,0 +1,3 @@
+https://apipheny.io/free-api/
+
+gacutil -i "D:\SSIS Packages\SSIS realtime scenario\130 How to read data from api in Csharp\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll"

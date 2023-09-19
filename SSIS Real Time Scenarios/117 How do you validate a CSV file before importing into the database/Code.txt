@@ -1,0 +1,45 @@
+using System.IO;
+
+public void Main()
+		{
+            // Define the expected field names and order
+            string[] expectedFieldNames = new string[] { "id", "first_name", "last_name", "DateOfJoining" };
+
+            // Read the flat file
+            string filePath = Dts.Variables["FilePath"].Value.ToString();
+            string[] lines = File.ReadAllLines(filePath);
+            string log_column_number_wrong = @"D:\Files\Logs\log_column_number_wrong.txt";
+            string log_column_order_wrong = @"D:\Files\Logs\log_column_order_wrong.txt";
+
+            if (File.Exists(log_column_number_wrong))
+                File.Delete(log_column_number_wrong);
+
+            if (File.Exists(log_column_order_wrong))
+                File.Delete(log_column_order_wrong);
+
+            // Check if the number of fields in the flat file match the expected number of fields
+            if (lines[0].Split(',').Length != expectedFieldNames.Length)
+            {
+                string errorMessage = "The number of fields in the flat file does not match the expected number of fields.";
+                File.AppendAllText(log_column_number_wrong, errorMessage + Environment.NewLine);
+                Dts.Events.FireError(-1, "Validation Error", errorMessage, String.Empty, 0);
+                Dts.TaskResult = (int)ScriptResults.Failure;
+                return;
+            }
+
+            // Check if the field names and order in the flat file match the expected field names and order
+            string[] fieldNames = lines[0].Split(',');
+            for (int i = 0; i < expectedFieldNames.Length; i++)
+            {
+                if (fieldNames[i] != expectedFieldNames[i])
+                {
+                    string errorMessage = "The field names and/or order in the flat file do not match the expected field names and order.";
+                    File.AppendAllText(log_column_order_wrong, errorMessage + Environment.NewLine);
+                    Dts.Events.FireError(-1, "Validation Error", errorMessage, String.Empty, 0);
+                    Dts.TaskResult = (int)ScriptResults.Failure;
+                    return;
+                }
+            }
+
+            Dts.TaskResult = (int)ScriptResults.Success;
+		}

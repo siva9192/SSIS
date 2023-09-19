@@ -1,0 +1,4 @@
+declare @path varchar(100)= 'D:\Files\Export\'
+SELECT ImageData
+,@path+ImageName AS Path
+FROM Images

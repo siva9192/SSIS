@@ -1,3 +1,0 @@
-"insert into VariableDemo
-select '"+ @[System::PackageName] +"', '"+ @[User::Demo] +"'
-"

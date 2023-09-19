@@ -1,0 +1,43 @@
+using System.IO;
+using System.Data.SqlClient;
+using System.Data.OleDb;
+
+public void Main()
+		{
+            string currentdatetime = DateTime.Now.ToString("yyyyMMddHHmmss");
+            string LogFolder = @"D:\Files\Logs";
+            string sourceFile = @"D:\Files\Customer.XLSX";
+
+            try
+            {
+                string connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + sourceFile + ";Extended Properties=Excel 12.0;";
+                OleDbConnection connection = new OleDbConnection(connectionString);
+                connection.Open();
+                string query = @"SELECT * FROM [Employee$A6:E] ";
+                OleDbCommand command = new OleDbCommand(query, connection);
+                OleDbDataReader reader = command.ExecuteReader();
+                DataTable dataTable = new DataTable();
+                dataTable.Load(reader);
+                reader.Close();
+                connection.Close();
+
+                string sqlConnectionString = @"server = DESKTOP-EKJ1P64\SQL2019; database = Test; Integrated Security=SSPI;";
+                SqlConnection sqlConnection = new SqlConnection(sqlConnectionString);
+                sqlConnection.Open();
+                SqlBulkCopy bulkCopy = new SqlBulkCopy(sqlConnection);
+                bulkCopy.DestinationTableName = "dbo.Email_Updated";
+                bulkCopy.WriteToServer(dataTable);
+                sqlConnection.Close();
+            }
+
+            catch (Exception exception)
+            {
+                using (StreamWriter sw = File.CreateText(LogFolder + "\\" + "ErrorLog_" + currentdatetime + ".log"))
+                {
+                    sw.WriteLine(exception.ToString());
+                }
+
+            }
+
+            Dts.TaskResult = (int)ScriptResults.Success;
+		}

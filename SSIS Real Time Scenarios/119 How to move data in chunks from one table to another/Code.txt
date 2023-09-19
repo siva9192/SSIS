@@ -1,0 +1,6 @@
+SQL_Query: "select a.* from Email a inner join temp_Email b on a.Id = b.Id where b.Part="+ (DT_WSTR,12)@[User::Part] +" "
+
+
+audit log expression: "insert into audit_log
+select 'Package.dtsx','Merging data to Email table', "+ (DT_WSTR,12)@[User::Part] +", "+ (DT_WSTR,12) @[User::RecordsInserted] +", getdate()
+"

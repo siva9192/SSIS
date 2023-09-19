@@ -1,0 +1,34 @@
+//get the file name dynamically
+
+SELECT 'Currency_'+  format(getdate(),'yyyyMMddHHmmss')
+
+//Create excel sheet
+
+CREATE TABLE `Currency` (
+    `id` INT,
+    `first_name` NVARCHAR(50),
+    `last_name` NVARCHAR(50),
+    `email` NVARCHAR(50),
+    `Currency` NVARCHAR(50),
+    `gender` NVARCHAR(50)
+)
+
+
+// variable
+
+FullFilePath: @[User::FolderPath] + "\\"+  @[User::FileName]
+
+
+// Data Flow Task. OLE DB Source
+
+SELECT [id]
+      ,cast([first_name] as nvarchar(50)) as [first_name]
+      ,cast([last_name] as nvarchar(50)) as [last_name]
+      ,cast([email] as nvarchar(50)) as [email]
+      ,cast([Currency] as nvarchar(50)) as [Currency]
+      ,cast([gender] as nvarchar(50)) as [gender]
+  FROM [dbo].[Currency]
+
+
+
+

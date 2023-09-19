@@ -1,1 +1,0 @@
-create table CityCountry(id int, City varchar(100), Country varchar(100))

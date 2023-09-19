@@ -1,0 +1,23 @@
+			string FilePath = Dts.Variables["FilePath"].Value.ToString();
+            string MonthName = Dts.Variables["MonthName"].Value.ToString();
+            string Status = "Fail";
+
+            DateTime lastModified = System.IO.File.GetLastWriteTime(FilePath);
+            string month = lastModified.ToString("MMM");
+
+            if (MonthName == month)
+            {
+                Status = "Pass";
+            }
+
+            Dts.Variables["Status"].Value = Status;
+
+
+-----------------
+
+@[User::Status] == "Pass"
+
+----------------
+Derives column
+
+FilePath: (DT_STR,1000,1252)@[User::FilePath]

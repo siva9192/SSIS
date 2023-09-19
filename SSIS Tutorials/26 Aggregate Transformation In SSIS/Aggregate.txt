@@ -1,2 +1,0 @@
-Bonus_Min,CommissionPct_Sum,SalesYTD_Avg,SalesLastYear_Max
-0,0.2,2133976,2396539.7601

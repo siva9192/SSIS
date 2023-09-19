@@ -1,1 +1,0 @@
-create table FileDetails(FileId int identity, FileName varchar(max))
