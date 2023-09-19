@@ -1,5 +1,5 @@
 IF EXISTS(SELECT 1 FROM sysobjects with (nolock) WHERE ID = OBJECT_ID(N'006 Archive files after processing') AND type = (N'U'))   
-drop table [006 Archive files after processing]
+drop table 006 Archive files after processing
 CREATE TABLE [dbo].[006 Archive files after processing](
 	[id] [varchar](50) NULL,
 	[first_name] [varchar](50) NULL,
