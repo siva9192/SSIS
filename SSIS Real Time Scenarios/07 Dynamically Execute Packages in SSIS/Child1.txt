@@ -1,2 +1,2 @@
-insert into Logs values ('Record Inserted from child package','ChildPkg1.dtsx', getdate())
+insert into [007 logs] values ('Record Inserted from child package','ChildPkg1.dtsx', getdate())
 
