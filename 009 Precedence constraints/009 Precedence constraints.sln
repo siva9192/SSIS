@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "009 Precedence constraints", "009 Precedence constraints.dtproj", "{C5FAF040-5DA0-406F-85A8-C5980F14C566}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C5FAF040-5DA0-406F-85A8-C5980F14C566}.Development|Default.ActiveCfg = Development
+		{C5FAF040-5DA0-406F-85A8-C5980F14C566}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7561641C-5F2B-4C15-BDFD-EB38A708C79B}
+	EndGlobalSection
+EndGlobal
