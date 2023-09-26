@@ -5,9 +5,4 @@ CREATE TABLE [dbo].[015 Addresses](
 	[Address] [varchar](100) NULL
 ) ON [PRIMARY]
 
-Truncate table [dbo].[015 Addresses]
-
-
-SELECT * FROM [dbo].[015 Addresses]
-
 
