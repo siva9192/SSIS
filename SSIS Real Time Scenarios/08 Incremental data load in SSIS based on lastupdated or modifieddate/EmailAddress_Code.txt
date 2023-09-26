@@ -1,21 +1,60 @@
 --get the max lastmodified from dest
-IF OBJECT_ID(N'dbo.zz_EmailAddress', N'U') IS NOT NULL
-drop table zz_EmailAddress
-CREATE TABLE [dbo].[zz_EmailAddress](
+IF OBJECT_ID(N'dbo.008 zz_EmailAddress', N'U') IS NOT NULL
+drop table [008 zz_EmailAddress]
+CREATE TABLE [dbo].[008 zz_EmailAddress](
 	[BusinessEntityID] [int] NULL,
 	[EmailAddressID] [int] NULL,
 	[EmailAddress] [nvarchar](50) NULL,
 	[rowguid] [uniqueidentifier] NULL,
 	[ModifiedDate] [datetime] NULL
 ) ON [PRIMARY]
-select DATEADD (ss, 1, max(lastupdatedvalue)) from config_table where TableName = '[Person].[EmailAddress]'
+select DATEADD (ss, 1, max(lastupdatedvalue)) from [008 Config_Table] where TableName = '[Person].[EmailAddress]'
+----------------------------------------------------
+CREATE TABLE [dbo].[008 Person_EmailAddress Dest](
+	[BusinessEntityID] [int] NULL,
+	[EmailAddressID] [int] NULL,
+	[EmailAddress] [nvarchar](50) NULL,
+	[rowguid] [uniqueidentifier] NULL,
+	[ModifiedDate] [datetime] NULL
+) ON [PRIMARY]
 
+SELECT * FROM [008 Person_EmailAddress Dest]
+---
+-- Insert 20 dummy records into [008 Person_EmailAddress]
+INSERT INTO [dbo].[008 Person_EmailAddress] ([BusinessEntityID], [EmailAddressID], [EmailAddress], [rowguid], [ModifiedDate])
+VALUES
+    (21, 101, 'dummy21@example.com', NEWID(), GETDATE()),
+    (22, 102, 'dummy22@example.com', NEWID(), GETDATE()),
+    (23, 103, 'dummy23@example.com', NEWID(), GETDATE()),
+    (24, 104, 'dummy24@example.com', NEWID(), GETDATE()),
+    (25, 105, 'dummy25@example.com', NEWID(), GETDATE()),
+    (26, 106, 'dummy26@example.com', NEWID(), GETDATE()),
+    (27, 107, 'dummy27@example.com', NEWID(), GETDATE()),
+    (28, 108, 'dummy28@example.com', NEWID(), GETDATE()),
+    (29, 109, 'dummy29@example.com', NEWID(), GETDATE()),
+    (30, 110, 'dummy30@example.com', NEWID(), GETDATE()),
+    (31, 111, 'dummy31@example.com', NEWID(), GETDATE()),
+    (32, 112, 'dummy32@example.com', NEWID(), GETDATE()),
+    (33, 113, 'dummy33@example.com', NEWID(), GETDATE()),
+    (34, 114, 'dummy34@example.com', NEWID(), GETDATE()),
+    (35, 115, 'dummy35@example.com', NEWID(), GETDATE()),
+    (36, 116, 'dummy36@example.com', NEWID(), GETDATE()),
+    (37, 117, 'dummy37@example.com', NEWID(), GETDATE()),
+    (38, 118, 'dummy38@example.com', NEWID(), GETDATE()),
+    (39, 119, 'dummy39@example.com', NEWID(), GETDATE()),
+    (40, 120, 'dummy40@example.com', NEWID(), GETDATE());
+
+
+
+Insert into [008 Config_Table] Select '008 Person_EmailAddress','ModifiedDate','2023-09-25 15:39:47.650'
+Select max(lastUpdatedvalue) from [008 Config_Table] where TableName = '008 Person_EmailAddress'  
+Select * from [008 Config_Table]
 ---------------------------------
 --Get the new or modified data
 --Source
-select * from [Person].[EmailAddress] where ModifiedDate > ?
+select * from [008 Person_EmailAddress] where ModifiedDate > ?
 --Lookup
-select [EmailAddressID] from [Person].[EmailAddress]
+select [EmailAddressID] from dbo.[008 Person_EmailAddress]
 
 -----------
 --Update data
@@ -26,12 +65,17 @@ UPDATE a
       ,a.[EmailAddress] = b.EmailAddress
       ,a.[rowguid] = b.rowguid
       ,a.[ModifiedDate] = b.ModifiedDate
-from [Person].[EmailAddress] a inner join [dbo].[ZZ_EmailAddress] b
+from [dbo].[008 Person_EmailAddress Dest] a inner join [dbo].[008 ZZ_EmailAddress] b
 on a.[EmailAddressID] = b.[EmailAddressID]
 set @updatedrecords = (select @@ROWCOUNT)
-insert into audit_log
-select 'Incremental Data Update.dtsx', '[Person].[EmailAddress]',?,@updatedrecords, getdate()
-update config_table
-set Lastupdatedvalue = (select max(ModifiedDate) from [Person].[EmailAddress])
-where tablename = '[Person].[EmailAddress]'
-and (select count(*) from [Person].[EmailAddress])>0
+
+insert into [008 audit_log]
+select 'Incremental Data Update.dtsx', '[dbo].[008 Person_EmailAddress]',?,@updatedrecords, getdate()
+
+SELECT * FROm[dbo].[008 audit_log]
+
+
+update [008 Config_Table]
+set Lastupdatedvalue = (select max(ModifiedDate) from [008 Person_EmailAddress])
+where tablename = '[008 Person_EmailAddress]'
+and (select count(*) from [008 Person_EmailAddress])>0

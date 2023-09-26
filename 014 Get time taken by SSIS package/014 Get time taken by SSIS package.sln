@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "014 Get time taken by SSIS package", "014 Get time taken by SSIS package.dtproj", "{6EBE5A46-6FD5-4D28-BCC0-8D9391A09197}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6EBE5A46-6FD5-4D28-BCC0-8D9391A09197}.Development|Default.ActiveCfg = Development
+		{6EBE5A46-6FD5-4D28-BCC0-8D9391A09197}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E7EFEFD1-ECAF-4DE0-9722-DEB46B95397F}
+	EndGlobalSection
+EndGlobal
